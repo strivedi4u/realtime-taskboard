@@ -20,18 +20,12 @@ export function useBoard(boardId: string) {
 }
 
 export function useCreateBoard() {
-  // const queryClient = useQueryClient()
+  const queryClient = useQueryClient()
 
   return useMutation({
     mutationFn: (data: CreateBoardRequest) => boardApi.create(data),
     onSuccess: () => {
-      // BUG #4: Missing cache invalidation
-      // The list doesn't update after creating a board
-      // Candidate needs to add:
-      // queryClient.invalidateQueries({ queryKey: BOARDS_QUERY_KEY })
-
-      // Currently doing nothing - this is intentional bug
-      console.log('Board created but cache not invalidated')
+      queryClient.invalidateQueries({ queryKey: BOARDS_QUERY_KEY })
     },
   })
 }
