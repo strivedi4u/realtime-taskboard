@@ -102,14 +102,7 @@ public class TaskService {
         TaskStatus currentStatus = task.getStatus();
         TaskStatus newStatus = request.getStatus();
 
-        // BUG #3: Missing validation for status transitions
-        // The test expects validation that prevents invalid transitions
-        // Valid transitions: TODO -> IN_PROGRESS, IN_PROGRESS -> DONE,
-        // IN_PROGRESS -> TODO (back), DONE -> IN_PROGRESS (back)
-        // Invalid: TODO -> DONE directly
-        //
-        // This validation is missing - candidate needs to implement it
-        // validateStatusTransition(currentStatus, newStatus);
+        validateStatusTransition(currentStatus, newStatus);
 
         task.setStatus(newStatus);
         Task updatedTask = taskRepository.save(task);
