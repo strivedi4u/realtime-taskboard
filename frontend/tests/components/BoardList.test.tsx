@@ -76,9 +76,9 @@ describe('BoardList', () => {
       error: null,
     })
 
-    render(<BoardList onSelectBoard={mockOnSelectBoard} />, { wrapper: createWrapper() })
+    const { container } = render(<BoardList onSelectBoard={mockOnSelectBoard} />, { wrapper: createWrapper() })
 
-    expect(screen.getByRole('status', { hidden: true }) || document.querySelector('.animate-spin')).toBeTruthy()
+    expect(container.querySelector('.animate-spin')).toBeTruthy()
   })
 
   it('should render error state', () => {
@@ -103,7 +103,7 @@ describe('BoardList', () => {
     render(<BoardList onSelectBoard={mockOnSelectBoard} />, { wrapper: createWrapper() })
 
     expect(screen.getByText(/no boards yet/i)).toBeInTheDocument()
-    expect(screen.getByText(/create your first board/i)).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /create your first board/i })).toBeInTheDocument()
   })
 
   it('should render list of boards', () => {
